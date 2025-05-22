@@ -35,13 +35,51 @@ async function listGenerate() {
     const title = model.querySelector("h3");
     const date = model.querySelector("div > div > p:first-child > span");
     const lieu = model.querySelector("div > div > p:nth-child(2)> span");
+    const detailsBtn = model.querySelector("div > div > button");
 
     title.textContent = eventObject.title;
     date.textContent = eventObject.date;
-    lieu.textContent = `${eventObject.venue.address} | ${eventObject.venue.city}`;
+    detailsBtn.addEventListener("click", () => {
+      details(
+        eventObject.start_date,
+        eventObject.end_date,
+        eventObject.description,
+        eventObject.url
+      );
+    });
+
+    lieu.textContent = !Array.isArray(eventObject.venue)
+      ? `${eventObject.venue.address} | ${eventObject.venue.city}`
+      : "Inconnu";
 
     listEvents.appendChild(model);
   });
 }
 
 listGenerate();
+
+function details(dateStart, dateEnd, desc, extLink) {
+  const modelDetails = templateDetails.content.cloneNode(true);
+  const dateDebut = modelDetails.querySelector(
+    "div > div > p:nth-child(2) > span"
+  );
+  const dateFin = modelDetails.querySelector(
+    "div > div > p:nth-child(3) > span"
+  );
+  const description = modelDetails.querySelector(
+    "div > div > p:nth-child(4) > span"
+  );
+  const lienExt = modelDetails.querySelector("div > div > p:last-child > a");
+  const btnFermer = modelDetails.querySelector("button");
+
+  dateDebut.textContent = dateStart;
+  dateFin.textContent = dateEnd;
+  description.textContent = desc;
+  lienExt.href = extLink;
+  lienExt.textContent = extLink;
+  btnFermer.addEventListener("click", () => {
+    btnFermer.parentElement.remove();
+  });
+
+  listEvents.appendChild(modelDetails);
+}
