@@ -5,7 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
-    <title>protail evenement</title>
+    <title>Portail Evenement</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Portail Évenements</h1>
+      <button id="themeBtn">Sombre</button>
+    </header>
+    <main>
+      <section id="sectionEvents">
+        <h2>Liste évenements:</h2>
+        <ul id="listEvents"></ul>
+      </section>
+      <section id="sectionMonPlanning">
+        <h2>Favoris de mon Planning:</h2>
+        <ul id="listFavoris"></ul>
+      </section>
+    </main>
+    <template id="templateEvents">
+      <div class="event">
+        <h3>Titre:</h3>
+        <div>
+          <div class="eventInfo">
+            <p>Date: <span></span></p>
+            <p>Lieu: <span></span></p>
+            <button>Details</button>
+          </div>
+          <button>Ajouter</button>
+        </div>
+      </div>
+    </template>
+    <template id="templateDetails">
+      <div class="details">
+        <div>
+          <h4>Détails</h4>
+          <p>Lien externe: <span></span></p>
+        </div>
+        <button>Fermer</button>
+      </div>
+    </template>
+  </body>
 </html>
