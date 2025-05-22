@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 * {
   margin: 0;
-  font-family: "Inter", "Gill Sans";
+  font-family: "Inter", "Gill Sans", sans-serif;
 }
 
 :root {
   --primary-color: #4ecdc4;
   --secondary-color: #f5a623;
+  --link-color: #0000ee;
 }
 
 [data-theme=claire] {
@@ -23,6 +24,26 @@
   --third-color: #ffe66d;
   --background-color: #292f36;
   --text-color: #f7fff7;
+  --link-color: #6ad0ff;
+}
+
+.buttonStyle, .details > button, .event > div > button, .event > div .eventInfo > button {
+  color: #f7fff7;
+  background-color: var(--secondary-color);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.listStyle, body main #sectionMonPlanning #listFavoris, body main #sectionEvents #listEvents {
+  display: flex;
+  height: 500px;
+  gap: 50px;
+  box-sizing: border-box;
+  border: 5px solid var(--header-bg-color);
+  padding: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  overflow-x: auto;
 }
 
 body {
@@ -38,11 +59,11 @@ body header {
   padding-left: 3.125rem;
   padding-right: 3.125rem;
 }
-body header h1 {
+body header > h1 {
   color: var(--header-text-color);
   font-size: 2.25rem;
 }
-body header button {
+body header > button {
   background-color: var(--background-color);
   color: var(--text-color);
   font-size: 2rem;
@@ -63,23 +84,99 @@ body main {
 body main #sectionEvents {
   display: flex;
   flex-direction: column;
-}
-body main #sectionEvents #listEvents {
-  display: flex;
-  height: 500px;
-  gap: 50px;
+  height: calc(100vh - 200px);
   box-sizing: border-box;
-  border: 5px solid var(--header-bg-color);
-  padding: 15px;
-  padding-left: 30px;
-  padding-right: 30px;
-  overflow-x: auto;
 }
-
+body main #sectionEvents > h2 {
+  color: var(--text-color);
+}
+body main #sectionMonPlanning {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+body main #sectionMonPlanning h2 {
+  color: var(--text-color);
+}
 .event {
   display: flex;
   flex-direction: column;
   width: 350px;
   height: 100%;
   flex-shrink: 0;
+  background-color: var(--primary-color);
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 5px;
+}
+.event > h3 {
+  text-align: center;
+}
+.event > div {
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgba(247, 255, 247, 0.5333333333);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.event > div .eventInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.event > div .eventInfo > button {
+  font-size: 16px;
+  border: 4px solid var(--third-color);
+  border-radius: 7.5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.event > div > button {
+  font-size: 20px;
+  border: 6px solid var(--third-color);
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.details {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 4px solid var(--header-bg-color);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.details > div h4 {
+  text-align: center;
+  font-size: 20px;
+}
+.details > button {
+  font-size: 20px;
+  border: 6px solid var(--third-color);
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+a {
+  color: var(--link-color);
 }/*# sourceMappingURL=style.css.map */
