@@ -1,16 +1,15 @@
 const themeBtn = document.getElementById("themeBtn");
 themeBtn.addEventListener("click", () => {
-  console.log("Switching color theme");
+  const current = document.body.getAttribute("data-theme") || "claire";
+  const next = current === "claire" ? "sombre" : "claire";
+  themeBtn.textContent = current === "claire" ? "Claire" : "Sombre";
+  document.body.setAttribute("data-theme", next);
 });
 
 const templateEvents = document.getElementById("templateEvents");
 const listEvents = document.getElementById("listEvents");
 const listFavoris = document.getElementById("listFavoris");
 const templateDetails = document.getElementById("templateDetails");
-console.log(listEvents.outerHTML);
-console.log(listFavoris.outerHTML);
-console.log(templateEvents.content);
-console.log(templateDetails.content);
 
 const baseUrl =
   "https://demo.theeventscalendar.com/wp-json/tribe/events/v1/events";
@@ -29,7 +28,6 @@ async function getData(url) {
 
 async function listGenerate() {
   const event = await getData(baseUrl);
-  console.log(event[0]);
   event.forEach((eventObject) => {
     const model = templateEvents.content.cloneNode(true);
     const title = model.querySelector("h3");
@@ -40,12 +38,27 @@ async function listGenerate() {
     title.textContent = eventObject.title;
     date.textContent = eventObject.date;
     detailsBtn.addEventListener("click", () => {
-      details(
-        eventObject.start_date,
-        eventObject.end_date,
-        eventObject.description,
-        eventObject.url
-      );
+      const lookForDetails = document.querySelector("#details");
+      if (!lookForDetails) {
+        console.log(lookForDetails);
+
+        details(
+          eventObject.start_date,
+          eventObject.end_date,
+          eventObject.description,
+          eventObject.url
+        );
+      } else {
+        console.log(lookForDetails);
+
+        lookForDetails.remove();
+        details(
+          eventObject.start_date,
+          eventObject.end_date,
+          eventObject.description,
+          eventObject.url
+        );
+      }
     });
 
     lieu.textContent = !Array.isArray(eventObject.venue)
