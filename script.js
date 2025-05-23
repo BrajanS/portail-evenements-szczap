@@ -10,6 +10,7 @@ themeBtn.addEventListener("click", () => {
   const currentTheme = document.body.getAttribute("data-theme");
   const nextTheme = currentTheme === "claire" ? "sombre" : "claire";
   const lifespan = 31536000; // Expire dans 1 an
+
   document.cookie = `theme=${nextTheme}; max-age=${lifespan}; path=/`;
   themeBtn.setAttribute("aria-pressed", nextTheme === "sombre");
   document.body.setAttribute("data-theme", nextTheme);
@@ -69,7 +70,7 @@ async function listEventsGenerate() {
     lieu.textContent = !Array.isArray(eventObject.venue)
       ? `${eventObject.venue.address} | ${eventObject.venue.city}`
       : "Inconnu";
-
+    // #region Messages Accessibilité - Aria
     detailsBtn.setAttribute(
       "aria-label",
       `Voir les détails de l'évènement ${eventObject.title}`
@@ -78,9 +79,11 @@ async function listEventsGenerate() {
       "aria-label",
       `Ajouter l'évènement ${eventObject.title} à mon planning`
     );
+    // #endregion
 
     detailsBtn.addEventListener("click", () => {
       const lookForDetails = document.querySelector("#details");
+      // Permet d'avoir 1 seule modale Détails aulieu de plusieurs
       if (!lookForDetails) {
         details(
           eventObject.start_date,
@@ -102,6 +105,8 @@ async function listEventsGenerate() {
     });
 
     ajouterBtn.addEventListener("click", () => {
+      // Lors du clique, stoque l'évent dans le LocalStorage,
+      //    puis les affiche dans "Mon Planning" / Favoris
       const getFavoris =
         JSON.parse(localStorage.getItem("eventsFavoris")) || [];
       getFavoris.push(eventObject);
@@ -133,6 +138,7 @@ function listFavorisGenerate(favoritesData) {
     lieu.textContent = !Array.isArray(favData.venue)
       ? `${favData.venue.address} | ${favData.venue.city}`
       : "Inconnu";
+    // #region Messages Accessibilité - Aria
     detailsBtn.setAttribute(
       "aria-label",
       `Voir les détails de l'évènement ${favData.title}`
@@ -141,6 +147,7 @@ function listFavorisGenerate(favoritesData) {
       "aria-label",
       `Retirer l'évènement ${favData.title} de mon planning`
     );
+    // #endregion
     detailsBtn.addEventListener("click", () => {
       const lookForDetails = document.querySelector("#details");
       if (!lookForDetails) {
@@ -166,6 +173,8 @@ function listFavorisGenerate(favoritesData) {
     retirerBtn.addEventListener("click", () => {
       const getFavoris =
         JSON.parse(localStorage.getItem("eventsFavoris")) || [];
+      // Clone les données de Favoris (liste de "Mon Planning"), SAUF la donnée
+      //    qui vien d'être cliquer. Pour l'effacer du LocalStorage
       const removedFavoris = getFavoris.filter(
         (deleteIfFound) => deleteIfFound.id !== favData.id
       );
@@ -184,6 +193,7 @@ listEventsGenerate();
 
 function details(dateStart, dateEnd, desc, extLink, insertInto) {
   const modelDetails = templateDetails.content.cloneNode(true);
+  // #region Selecteurs d'elements de details
   const dateDebut = modelDetails.querySelector(
     "div > div > p:nth-child(2) > span"
   );
@@ -195,6 +205,7 @@ function details(dateStart, dateEnd, desc, extLink, insertInto) {
   );
   const lienExt = modelDetails.querySelector("div > div > p:last-child > a");
   const btnFermer = modelDetails.querySelector("button");
+  // #endregion
 
   dateDebut.textContent = dateStart;
   dateFin.textContent = dateEnd;
@@ -206,5 +217,6 @@ function details(dateStart, dateEnd, desc, extLink, insertInto) {
     btnFermer.parentElement.remove();
   });
   insertInto.appendChild(modelDetails);
+  // Focus la tabulation sur le Lien (seulement les liens et boutons sont focusables)
   lienExt.focus();
 }
