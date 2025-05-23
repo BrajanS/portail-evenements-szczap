@@ -107,7 +107,7 @@ body main #sectionMonPlanning h2 {
   flex-shrink: 0;
   background-color: var(--primary-color);
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid var(--header-bg-color);
   padding: 10px;
   gap: 10px;
   border-radius: 5px;
