@@ -155,14 +155,22 @@ body main #sectionMonPlanning h2 {
   border: 4px solid var(--header-bg-color);
   border-radius: 10px;
   padding: 20px;
+  box-sizing: border-box;
+  width: 21.875rem;
+  height: 28.125rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 48px);
 }
 .details > div {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 .details > div > h4 {
   text-align: center;
@@ -180,6 +188,7 @@ body main #sectionMonPlanning h2 {
 
 a {
   color: var(--link-color);
+  word-break: break-word;
 }
 
 @media (max-width: 540px) {

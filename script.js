@@ -6,6 +6,7 @@ themeBtn.addEventListener("click", () => {
   document.body.setAttribute("data-theme", next);
 });
 
+const sectionEvents = document.getElementById("sectionEvents");
 const templateEvents = document.getElementById("templateEvents");
 const listEvents = document.getElementById("listEvents");
 const listFavoris = document.getElementById("listFavoris");
@@ -46,7 +47,8 @@ async function listGenerate() {
           eventObject.start_date,
           eventObject.end_date,
           eventObject.description,
-          eventObject.url
+          eventObject.url,
+          sectionEvents
         );
       } else {
         console.log(lookForDetails);
@@ -56,7 +58,8 @@ async function listGenerate() {
           eventObject.start_date,
           eventObject.end_date,
           eventObject.description,
-          eventObject.url
+          eventObject.url,
+          sectionEvents
         );
       }
     });
@@ -71,7 +74,7 @@ async function listGenerate() {
 
 listGenerate();
 
-function details(dateStart, dateEnd, desc, extLink) {
+function details(dateStart, dateEnd, desc, extLink, insertInto) {
   const modelDetails = templateDetails.content.cloneNode(true);
   const dateDebut = modelDetails.querySelector(
     "div > div > p:nth-child(2) > span"
@@ -93,6 +96,6 @@ function details(dateStart, dateEnd, desc, extLink) {
   btnFermer.addEventListener("click", () => {
     btnFermer.parentElement.remove();
   });
-
-  listEvents.appendChild(modelDetails);
+  insertInto.appendChild(modelDetails);
+  lienExt.focus();
 }
