@@ -36,13 +36,13 @@
 
 .listStyle, body main #sectionMonPlanning #listFavoris, body main #sectionEvents #listEvents {
   display: flex;
-  height: 500px;
-  gap: 50px;
+  height: 31.25rem;
+  gap: 3.125rem;
   box-sizing: border-box;
-  border: 5px solid var(--header-bg-color);
+  border: 0.3125rem solid var(--header-bg-color);
   padding: 15px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 1.875rem;
+  padding-right: 1.875rem;
   overflow-x: auto;
 }
 
@@ -58,6 +58,7 @@ body header {
   height: 12.5rem;
   padding-left: 3.125rem;
   padding-right: 3.125rem;
+  box-sizing: border-box;
 }
 body header > h1 {
   color: var(--header-text-color);
@@ -77,9 +78,9 @@ body main {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 30px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 1.875rem;
+  padding-left: 3.125rem;
+  padding-right: 3.125rem;
 }
 body main #sectionEvents {
   display: flex;
@@ -101,7 +102,7 @@ body main #sectionMonPlanning h2 {
 .event {
   display: flex;
   flex-direction: column;
-  width: 350px;
+  width: 21.875rem;
   height: 100%;
   flex-shrink: 0;
   background-color: var(--primary-color);
@@ -128,7 +129,7 @@ body main #sectionMonPlanning h2 {
   gap: 10px;
 }
 .event > div .eventInfo > button {
-  font-size: 16px;
+  font-size: 1rem;
   border: 4px solid var(--third-color);
   border-radius: 7.5px;
   padding-top: 5px;
@@ -139,8 +140,8 @@ body main #sectionMonPlanning h2 {
   width: fit-content;
 }
 .event > div > button {
-  font-size: 20px;
-  border: 6px solid var(--third-color);
+  font-size: 1.25rem;
+  border: 0.375rem solid var(--third-color);
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -163,13 +164,13 @@ body main #sectionMonPlanning h2 {
   flex-direction: column;
   gap: 10px;
 }
-.details > div h4 {
+.details > div > h4 {
   text-align: center;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 .details > button {
-  font-size: 20px;
-  border: 6px solid var(--third-color);
+  font-size: 1.25rem;
+  border: 0.375rem solid var(--third-color);
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -179,4 +180,15 @@ body main #sectionMonPlanning h2 {
 
 a {
   color: var(--link-color);
+}
+
+@media (max-width: 540px) {
+  html {
+    font-size: 0.8rem;
+  }
+  header {
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }/*# sourceMappingURL=style.css.map */
