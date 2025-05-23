@@ -10,7 +10,13 @@
   <body data-theme="claire">
     <header>
       <h1>Portail Évenements</h1>
-      <button id="themeBtn">Sombre</button>
+      <button
+        id="themeBtn"
+        aria-label="Bouton qui change entre Theme claire et sombre"
+        aria-pressed="false"
+      >
+        Sombre
+      </button>
     </header>
     <main>
       <section id="sectionEvents">
@@ -44,7 +50,11 @@
           <p>Description: <span></span></p>
           <p>
             Lien externe:
-            <a aria-label="Lien extérieur vers la page d'évènements"></a>
+            <a
+              aria-label="Lien extérieur vers la page d'évènements"
+              target="_blank"
+              rel="noopener"
+            ></a>
           </p>
         </div>
         <button>Fermer</button>

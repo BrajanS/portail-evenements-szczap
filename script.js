@@ -1,11 +1,23 @@
+// #region THEME
 const themeBtn = document.getElementById("themeBtn");
+const cookie = document.cookie.split("=")[1];
+const theme = cookie || "claire";
+
+document.body.setAttribute("data-theme", theme);
+themeBtn.textContent = theme === "claire" ? "Sombre" : "Claire";
+
 themeBtn.addEventListener("click", () => {
-  const current = document.body.getAttribute("data-theme") || "claire";
-  const next = current === "claire" ? "sombre" : "claire";
-  themeBtn.textContent = current === "claire" ? "Claire" : "Sombre";
-  document.body.setAttribute("data-theme", next);
+  const currentTheme = document.body.getAttribute("data-theme");
+  const nextTheme = currentTheme === "claire" ? "sombre" : "claire";
+  const lifespan = 31536000; // Expire dans 1 an
+  document.cookie = `theme=${nextTheme}; max-age=${lifespan}; path=/`;
+  themeBtn.setAttribute("aria-pressed", nextTheme === "sombre");
+  document.body.setAttribute("data-theme", nextTheme);
+  themeBtn.textContent = nextTheme === "claire" ? "Sombre" : "Claire";
 });
-// #region Constantes Globales
+// #endregion
+
+// #region CONSTANTES GLOBALES
 const sectionEvents = document.getElementById("sectionEvents");
 const sectionMonPlanning = document.getElementById("sectionMonPlanning");
 const templateEvents = document.getElementById("templateEvents");
@@ -29,6 +41,7 @@ async function getData(url) {
 }
 
 async function listEventsGenerate() {
+  listEvents.replaceChildren();
   const event = await getData(baseUrl);
   const storedEvents = JSON.parse(localStorage.getItem("eventsFavoris")) || [];
   console.log("storedEvents", storedEvents);
@@ -56,6 +69,16 @@ async function listEventsGenerate() {
     lieu.textContent = !Array.isArray(eventObject.venue)
       ? `${eventObject.venue.address} | ${eventObject.venue.city}`
       : "Inconnu";
+
+    detailsBtn.setAttribute(
+      "aria-label",
+      `Voir les détails de l'évènement ${eventObject.title}`
+    );
+    ajouterBtn.setAttribute(
+      "aria-label",
+      `Ajouter l'évènement ${eventObject.title} à mon planning`
+    );
+
     detailsBtn.addEventListener("click", () => {
       const lookForDetails = document.querySelector("#details");
       if (!lookForDetails) {
@@ -82,6 +105,7 @@ async function listEventsGenerate() {
       const getFavoris =
         JSON.parse(localStorage.getItem("eventsFavoris")) || [];
       getFavoris.push(eventObject);
+      listFavorisGenerate(getFavoris);
       localStorage.setItem("eventsFavoris", JSON.stringify(getFavoris));
       ajouterBtn.parentElement.parentElement.remove();
     });
@@ -109,6 +133,14 @@ function listFavorisGenerate(favoritesData) {
     lieu.textContent = !Array.isArray(favData.venue)
       ? `${favData.venue.address} | ${favData.venue.city}`
       : "Inconnu";
+    detailsBtn.setAttribute(
+      "aria-label",
+      `Voir les détails de l'évènement ${favData.title}`
+    );
+    retirerBtn.setAttribute(
+      "aria-label",
+      `Retirer l'évènement ${favData.title} de mon planning`
+    );
     detailsBtn.addEventListener("click", () => {
       const lookForDetails = document.querySelector("#details");
       if (!lookForDetails) {
@@ -137,17 +169,17 @@ function listFavorisGenerate(favoritesData) {
       const removedFavoris = getFavoris.filter(
         (deleteIfFound) => deleteIfFound.id !== favData.id
       );
-      console.log("Verif suppr", removedFavoris);
+      console.log("Verif suppr:", removedFavoris);
 
-      // localStorage.setItem("eventsFavoris", JSON.stringify(getFavoris));
-      // ajouterBtn.parentElement.parentElement.remove();
+      localStorage.setItem("eventsFavoris", JSON.stringify(removedFavoris));
+      retirerBtn.parentElement.parentElement.remove();
+      listEventsGenerate();
     });
 
     listFavoris.appendChild(model);
   });
 }
 
-// localStorage.clear();
 listEventsGenerate();
 
 function details(dateStart, dateEnd, desc, extLink, insertInto) {
@@ -169,6 +201,7 @@ function details(dateStart, dateEnd, desc, extLink, insertInto) {
   description.textContent = desc;
   lienExt.href = extLink;
   lienExt.textContent = extLink;
+  btnFermer.setAttribute("aria-label", "Fermer les détails de l'évènement");
   btnFermer.addEventListener("click", () => {
     btnFermer.parentElement.remove();
   });
